@@ -225,15 +225,12 @@
         }
     }
 </style>
-```
 
 </head>
 <body>
     <div class="container-fluid">
-        <h1>🔥 2026 Push Ups Challenge</h1>
+        <h1>2026 Push Ups Challenge</h1>
         <p class="header-subtitle">Track your daily progress and stay motivated!</p>
-
-```
     <div class="dashboard-container">
         <div class="row">
             <div class="col-md-3 col-6">
@@ -266,7 +263,7 @@
             </div>
         </div>
 
-        <h2 class="section-title">📊 Year-End Projection</h2>
+        <h2 class="section-title">Year-End Projection</h2>
         <div class="row">
             <div class="col-md-4 col-12">
                 <div class="stat-card projection-card">
@@ -295,7 +292,7 @@
             <div class="progress-bar-fill" id="yearProgress" style="width: 0%">0%</div>
         </div>
 
-        <h2 class="section-title">⏰ AM vs PM Performance</h2>
+        <h2 class="section-title">AM vs PM Performance</h2>
         <div class="row">
             <div class="col-md-4 col-6">
                 <div class="stat-card">
@@ -324,17 +321,17 @@
             <canvas id="amPmChart"></canvas>
         </div>
 
-        <h2 class="section-title">📈 Daily Progress</h2>
+        <h2 class="section-title">Daily Progress</h2>
         <div class="chart-container">
             <canvas id="pushUpsChart"></canvas>
         </div>
 
-        <h2 class="section-title">📅 Weekly Breakdown</h2>
+        <h2 class="section-title">Weekly Breakdown</h2>
         <div class="chart-container">
             <canvas id="weeklyChart"></canvas>
         </div>
 
-        <h2 class="section-title">💡 Key Insights</h2>
+        <h2 class="section-title">Key Insights</h2>
         <div id="insightsContainer"></div>
 
         <div class="alert alert-info" id="loadingStatus">
@@ -451,7 +448,7 @@
         document.getElementById('totalPM').textContent = totalPM.toLocaleString();
         document.getElementById('pmPercentage').textContent = `${pmPercentage}% of total`;
         
-        const preferredTime = totalAM > totalPM ? '🌅 AM' : '🌙 PM';
+        const preferredTime = totalAM > totalPM ? 'AM' : 'PM';
         const preferredDiff = Math.abs(totalAM - totalPM);
         document.getElementById('preferredTime').textContent = preferredTime;
         document.getElementById('preferredSubtitle').textContent = `${preferredDiff} more push-ups`;
@@ -478,7 +475,7 @@
         const consistency = Math.round((stats.streak / data.length) * 100);
         if (consistency > 80) {
             insights.push({
-                title: '🔥 Excellent Consistency',
+                title: 'Excellent Consistency',
                 text: `You're maintaining a ${stats.streak}-day streak! That's ${consistency}% consistency. Keep it up!`
             });
         }
@@ -489,12 +486,12 @@
         const improvement = recentAvg - earlyAvg;
         if (improvement > 0) {
             insights.push({
-                title: '📈 You\'re Improving',
+                title: 'You are Improving',
                 text: `Your 7-day average (${recentAvg}) is ${improvement} push-ups higher than your first week (${earlyAvg})!`
             });
         } else if (improvement < 0) {
             insights.push({
-                title: '💪 Room for Growth',
+                title: 'Room for Growth',
                 text: `Your recent 7-day average (${recentAvg}) is ${Math.abs(improvement)} below your first week. Consider ramping back up!`
             });
         }
@@ -503,17 +500,17 @@
         const amPmRatio = (stats.totalAM / stats.totalPM).toFixed(2);
         if (amPmRatio > 1.5) {
             insights.push({
-                title: '🌅 Morning Person',
+                title: 'Morning Person',
                 text: `You do ${Math.round((stats.totalAM / (stats.totalAM + stats.totalPM)) * 100)}% of your push-ups in the morning. Great way to start the day!`
             });
         } else if (amPmRatio < 0.67) {
             insights.push({
-                title: '🌙 Night Owl',
+                title: 'Night Owl',
                 text: `You do ${Math.round((stats.totalPM / (stats.totalAM + stats.totalPM)) * 100)}% of your push-ups in the evening. Strong finish to your days!`
             });
         } else {
             insights.push({
-                title: '⚖️ Balanced Schedule',
+                title: 'Balanced Schedule',
                 text: `You maintain a good balance between AM (${stats.totalAM}) and PM (${stats.totalPM}) workouts.`
             });
         }
@@ -521,7 +518,7 @@
         // Projection insight
         if (stats.projectedYearTotal >= 50000) {
             insights.push({
-                title: '🎯 Milestone Alert',
+                title: 'Milestone Alert',
                 text: `At your current pace, you're on track for ${stats.projectedYearTotal.toLocaleString()} push-ups this year! That's ${Math.round(stats.projectedYearTotal / 1000)}K!`
             });
         }
@@ -531,7 +528,7 @@
         const dailyNeeded = Math.ceil(pushUpsToMilestone / stats.daysRemaining);
         if (pushUpsToMilestone > 0 && dailyNeeded <= stats.average * 1.2) {
             insights.push({
-                title: '🏆 50K Goal Achievable',
+                title: '50K Goal Achievable',
                 text: `You need ${dailyNeeded} push-ups per day to hit 50,000 by year end. You're averaging ${stats.average}, so you're close!`
             });
         }
@@ -765,13 +762,12 @@
     }
 
     function showError(message) {
-        document.getElementById('loadingStatus').innerHTML = `<strong>⚠️ Error:</strong> ${message}`;
+        document.getElementById('loadingStatus').innerHTML = `<strong>Error:</strong> ${message}`;
         document.getElementById('loadingStatus').classList.remove('alert-info');
         document.getElementById('loadingStatus').classList.add('alert-danger');
     }
 
     window.addEventListener('load', fetchDataFromSheet);
 </script>
-
 </body>
 </html>
