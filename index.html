@@ -17,7 +17,7 @@
             background: white;
             border-radius: 10px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            padding: 40px;
+            padding: 40px 20px;
             margin-top: 20px;
             margin-bottom: 40px;
         }
@@ -54,6 +54,7 @@
             text-align: center;
             margin-bottom: 10px;
             font-weight: bold;
+            font-size: 28px;
         }
         .header-subtitle {
             color: rgba(255,255,255,0.9);
@@ -72,34 +73,51 @@
         .alert {
             border-radius: 8px;
         }
+        @media (max-width: 768px) {
+            .dashboard-container {
+                padding: 20px 15px;
+            }
+            h1 {
+                font-size: 24px;
+            }
+            .stat-card {
+                padding: 15px;
+            }
+            .stat-card .number {
+                font-size: 28px;
+            }
+            .chart-container {
+                height: 300px;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="container-fluid">
         <h1>🔥 2026 Push Ups Challenge</h1>
         <p class="header-subtitle">Track your daily progress and stay motivated!</p>
         
         <div class="dashboard-container">
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-3 col-6">
                     <div class="stat-card">
                         <h3>Total Push Ups</h3>
                         <div class="number" id="totalPushUps">-</div>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3 col-6">
                     <div class="stat-card">
                         <h3>Average Daily</h3>
                         <div class="number" id="averagePushUps">-</div>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3 col-6">
                     <div class="stat-card">
                         <h3>Best Day</h3>
                         <div class="number" id="bestDay">-</div>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3 col-6">
                     <div class="stat-card">
                         <h3>Current Streak</h3>
                         <div class="number" id="streak">-</div>
@@ -129,55 +147,54 @@
 
         async function fetchDataFromSheet() {
             const sheetID = '14KN-KDPbNyXk-lSJ_yNqx4LhIdgiUp2lwoHEsEmJiPQ';
-            const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetID}/export?format=csv`;
-
+            const sheetName = 'Sheet1'; // Update if your sheet tab has a different name
+            
             try {
-                const response = await fetch(csvUrl);
+                // Using OpenSheet API - no API key required, no setup needed
+                const apiUrl = `https://opensheet.elk.sh/${sheetID}/${sheetName}`;
+                
+                const response = await fetch(apiUrl);
                 if (!response.ok) {
                     throw new Error('Failed to fetch data');
                 }
                 
-                const csvText = await response.text();
-                const lines = csvText.trim().split('\n');
-                
-                const data = [];
-                for (let i = 1; i < lines.length; i++) {
-                    if (lines[i].trim() === '') continue;
-                    
-                    const parts = lines[i].split(',');
-                    if (parts.length >= 2) {
-                        const date = parts[0].trim();
-                        const pushups = parseInt(parts[1].trim());
-                        
-                        if (date && !isNaN(pushups)) {
-                            data.push({
-                                date: date,
-                                pushups: pushups
-                            });
-                        }
-                    }
-                }
+                const data = await response.json();
 
-                if (data.length > 0) {
+                if (data && data.length > 0) {
                     processData(data);
                     document.getElementById('loadingStatus').style.display = 'none';
                 } else {
-                    showError('No valid data found in spreadsheet. Please check the format.');
+                    showError('No data found in spreadsheet.');
                 }
             } catch (error) {
-                showError('Unable to load data from Google Sheets. Please ensure the spreadsheet is publicly shared.');
+                showError('Unable to load data. Please ensure the spreadsheet is publicly shared (anyone with link can view).');
                 console.error('Fetch error:', error);
             }
         }
 
         function processData(data) {
-            const total = data.reduce((sum, item) => sum + item.pushups, 0);
-            const average = Math.round(total / data.length);
-            const bestDay = Math.max(...data.map(item => item.pushups));
+            // Convert data - assuming first column is date, second is push-ups
+            const processedData = data.map(row => {
+                // Get first two values regardless of column names
+                const values = Object.values(row);
+                return {
+                    date: values[0] || '',
+                    pushups: parseInt(values[1]) || 0
+                };
+            }).filter(item => item.date && item.pushups > 0);
+
+            if (processedData.length === 0) {
+                showError('No valid data found. Please check your spreadsheet format.');
+                return;
+            }
+
+            const total = processedData.reduce((sum, item) => sum + item.pushups, 0);
+            const average = Math.round(total / processedData.length);
+            const bestDay = Math.max(...processedData.map(item => item.pushups));
             
             let streak = 0;
-            for (let i = data.length - 1; i >= 0; i--) {
-                if (data[i].pushups > 0) {
+            for (let i = processedData.length - 1; i >= 0; i--) {
+                if (processedData[i].pushups > 0) {
                     streak++;
                 } else {
                     break;
@@ -189,11 +206,11 @@
             document.getElementById('bestDay').textContent = bestDay;
             document.getElementById('streak').textContent = streak + ' days';
 
-            const labels = data.map(item => item.date);
-            const pushupCounts = data.map(item => item.pushups);
+            const labels = processedData.map(item => item.date);
+            const pushupCounts = processedData.map(item => item.pushups);
 
             renderDailyChart(labels, pushupCounts);
-            renderWeeklyChart(data);
+            renderWeeklyChart(processedData);
         }
 
         function renderDailyChart(labels, data) {
@@ -229,7 +246,7 @@
                         legend: {
                             display: true,
                             labels: {
-                                font: { size: 14 }
+                                font: { size: 12 }
                             }
                         }
                     },
@@ -291,7 +308,7 @@
                         legend: {
                             display: true,
                             labels: {
-                                font: { size: 14 }
+                                font: { size: 12 }
                             }
                         }
                     },
