@@ -147,7 +147,7 @@
 
         async function fetchDataFromSheet() {
             const sheetID = '14KN-KDPbNyXk-lSJ_yNqx4LhIdgiUp2lwoHEsEmJiPQ';
-            const sheetName = 'Sheet1'; // Update if your sheet tab has a different name
+            const sheetName = 'RawData';
             
             try {
                 // Using OpenSheet API - no API key required, no setup needed
@@ -173,28 +173,27 @@
         }
 
         function processData(data) {
-            // Convert data - assuming first column is date, second is push-ups
+            // The data comes with headers: Date, Day, AM Push-Ups, PM Push-Ups, Total, Notes
+            // We need the Date (column 0) and Total (column 4)
             const processedData = data.map(row => {
-                // Get first two values regardless of column names
-                const values = Object.values(row);
                 return {
-                    date: values[0] || '',
-                    pushups: parseInt(values[1]) || 0
+                    date: row['Date'] || '',
+                    total: parseInt(row['Total']) || 0
                 };
-            }).filter(item => item.date && item.pushups > 0);
+            }).filter(item => item.date && item.total > 0);
 
             if (processedData.length === 0) {
                 showError('No valid data found. Please check your spreadsheet format.');
                 return;
             }
 
-            const total = processedData.reduce((sum, item) => sum + item.pushups, 0);
+            const total = processedData.reduce((sum, item) => sum + item.total, 0);
             const average = Math.round(total / processedData.length);
-            const bestDay = Math.max(...processedData.map(item => item.pushups));
+            const bestDay = Math.max(...processedData.map(item => item.total));
             
             let streak = 0;
             for (let i = processedData.length - 1; i >= 0; i--) {
-                if (processedData[i].pushups > 0) {
+                if (processedData[i].total > 0) {
                     streak++;
                 } else {
                     break;
@@ -207,7 +206,7 @@
             document.getElementById('streak').textContent = streak + ' days';
 
             const labels = processedData.map(item => item.date);
-            const pushupCounts = processedData.map(item => item.pushups);
+            const pushupCounts = processedData.map(item => item.total);
 
             renderDailyChart(labels, pushupCounts);
             renderWeeklyChart(processedData);
@@ -267,7 +266,13 @@
             const weekLabels = {};
             
             data.forEach(item => {
-                const date = new Date(item.date);
+                // Parse date in format "D-MMM-YYYY" (1-Jan-2026)
+                const dateParts = item.date.split('-');
+                const monthMap = {
+                    'Jan': 0, 'Feb': 1, 'Mar': 2, 'Apr': 3, 'May': 4, 'Jun': 5,
+                    'Jul': 6, 'Aug': 7, 'Sep': 8, 'Oct': 9, 'Nov': 10, 'Dec': 11
+                };
+                const date = new Date(2026, monthMap[dateParts[1]], parseInt(dateParts[0]));
                 const weekStart = new Date(date);
                 weekStart.setDate(date.getDate() - date.getDay());
                 const weekKey = weekStart.toISOString().split('T')[0];
@@ -276,7 +281,7 @@
                     weeklyData[weekKey] = 0;
                     weekLabels[weekKey] = `Week of ${weekKey}`;
                 }
-                weeklyData[weekKey] += item.pushups;
+                weeklyData[weekKey] += item.total;
             });
 
             const weeks = Object.keys(weeklyData).sort();
