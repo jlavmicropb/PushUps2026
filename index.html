@@ -7,87 +7,174 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #0f0f0f;
+            color: #e0e0e0;
             min-height: 100vh;
             padding: 20px 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
+
         .dashboard-container {
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            background: #1a1a1a;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.7);
             padding: 40px 20px;
             margin-top: 20px;
             margin-bottom: 40px;
+            border: 1px solid #2a2a2a;
         }
+
         .stat-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-radius: 10px;
+            background: linear-gradient(135deg, #2d3561 0%, #1e2747 100%);
+            color: #ffffff;
+            border-radius: 12px;
             padding: 20px;
             margin-bottom: 20px;
             text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            border: 1px solid #3a4570;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+        }
+
         .stat-card h3 {
-            font-size: 14px;
+            font-size: 13px;
             margin-bottom: 10px;
-            opacity: 0.9;
+            opacity: 0.85;
             font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #a8b5ff;
         }
+
         .stat-card .number {
-            font-size: 36px;
+            font-size: 42px;
             font-weight: bold;
             margin: 10px 0;
+            color: #4a7fff;
         }
+
         .chart-container {
             position: relative;
             height: 400px;
             margin: 30px 0;
-            background: #f8f9fa;
-            border-radius: 8px;
-            padding: 15px;
+            background: #151515;
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #2a2a2a;
         }
+
         h1 {
-            color: white;
+            color: #ffffff;
             text-align: center;
             margin-bottom: 10px;
             font-weight: bold;
-            font-size: 28px;
+            font-size: 32px;
+            text-shadow: 0 2px 10px rgba(102, 126, 234, 0.3);
         }
+
         .header-subtitle {
-            color: rgba(255,255,255,0.9);
+            color: #b0b0b0;
             text-align: center;
             margin-bottom: 30px;
             font-size: 16px;
         }
+
         .section-title {
-            color: #333;
+            color: #e0e0e0;
             margin-top: 30px;
             margin-bottom: 20px;
             font-weight: 600;
-            border-bottom: 2px solid #667eea;
+            border-bottom: 2px solid #4a7fff;
             padding-bottom: 10px;
+            font-size: 18px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
+
         .alert {
             border-radius: 8px;
+            border: 1px solid #3a3a3a;
         }
+
+        .alert-info {
+            background-color: #1a2f4a;
+            color: #a8d5ff;
+            border-color: #2a4a6a;
+        }
+
+        .alert-danger {
+            background-color: #4a1a1a;
+            color: #ff9999;
+            border-color: #6a2a2a;
+        }
+
+        .alert strong {
+            color: #ffffff;
+        }
+
+        /* Chart.js custom styling */
+        canvas {
+            filter: invert(0);
+        }
+
+        .dark-mode-chart {
+            background: transparent;
+        }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #4a7fff;
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #667eea;
+        }
+
         @media (max-width: 768px) {
             .dashboard-container {
                 padding: 20px 15px;
             }
+
             h1 {
                 font-size: 24px;
             }
+
             .stat-card {
                 padding: 15px;
             }
+
             .stat-card .number {
-                font-size: 28px;
+                font-size: 32px;
             }
+
             .chart-container {
                 height: 300px;
+                padding: 15px;
+            }
+
+            .section-title {
+                font-size: 16px;
             }
         }
     </style>
@@ -144,6 +231,13 @@
     <script>
         let dailyChart = null;
         let weeklyChart = null;
+
+        // Dark mode chart configuration
+        const chartDefaults = {
+            color: '#e0e0e0',
+            borderColor: '#2a2a2a',
+            gridColor: '#2a2a2a'
+        };
 
         async function fetchDataFromSheet() {
             const sheetID = '14KN-KDPbNyXk-lSJ_yNqx4LhIdgiUp2lwoHEsEmJiPQ';
@@ -226,16 +320,17 @@
                     datasets: [{
                         label: 'Daily Push Ups',
                         data: data,
-                        borderColor: '#667eea',
-                        backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                        borderColor: '#4a7fff',
+                        backgroundColor: 'rgba(74, 127, 255, 0.1)',
                         borderWidth: 3,
                         fill: true,
                         tension: 0.4,
                         pointRadius: 5,
-                        pointBackgroundColor: '#667eea',
-                        pointBorderColor: '#fff',
+                        pointBackgroundColor: '#4a7fff',
+                        pointBorderColor: '#1a1a1a',
                         pointBorderWidth: 2,
-                        pointHoverRadius: 7
+                        pointHoverRadius: 7,
+                        pointHoverBackgroundColor: '#667eea'
                     }]
                 },
                 options: {
@@ -245,15 +340,33 @@
                         legend: {
                             display: true,
                             labels: {
+                                color: '#e0e0e0',
                                 font: { size: 12 }
                             }
+                        },
+                        filler: {
+                            propagate: true
                         }
                     },
                     scales: {
                         y: {
                             beginAtZero: true,
                             ticks: {
+                                color: '#a0a0a0',
                                 stepSize: Math.max(1, Math.ceil(Math.max(...data) / 5))
+                            },
+                            grid: {
+                                color: '#2a2a2a',
+                                drawBorder: false
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                color: '#a0a0a0'
+                            },
+                            grid: {
+                                color: '#2a2a2a',
+                                drawBorder: false
                             }
                         }
                     }
@@ -301,9 +414,11 @@
                     datasets: [{
                         label: 'Weekly Total Push Ups',
                         data: weeklyCounts,
-                        backgroundColor: 'rgba(118, 75, 162, 0.8)',
-                        borderColor: '#764ba2',
-                        borderWidth: 2
+                        backgroundColor: 'rgba(74, 127, 255, 0.7)',
+                        borderColor: '#4a7fff',
+                        borderWidth: 2,
+                        borderRadius: 6,
+                        hoverBackgroundColor: 'rgba(102, 126, 234, 0.9)'
                     }]
                 },
                 options: {
@@ -313,13 +428,30 @@
                         legend: {
                             display: true,
                             labels: {
+                                color: '#e0e0e0',
                                 font: { size: 12 }
                             }
                         }
                     },
                     scales: {
                         y: {
-                            beginAtZero: true
+                            beginAtZero: true,
+                            ticks: {
+                                color: '#a0a0a0'
+                            },
+                            grid: {
+                                color: '#2a2a2a',
+                                drawBorder: false
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                color: '#a0a0a0'
+                            },
+                            grid: {
+                                color: '#2a2a2a',
+                                drawBorder: false
+                            }
                         }
                     }
                 }
