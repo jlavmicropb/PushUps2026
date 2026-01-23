@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Push Up Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-5">Push Up Dashboard</h1>
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <h3>Statistics</h3>
+                <p id="totalPushUps">Total Push Ups: <span></span></p>
+                <p id="averagePushUps">Average Push Ups: <span></span></p>
+            </div>
+            <div class="col-md-6">
+                <h3>Push Ups Over Time</h3>
+                <canvas id="pushUpsChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function fetchData() {
+            const sheetID = '14KN-KDPbNyXk-lSJ_yNqx4LhIdgiUp2lwoHEsEmJiPQ';
+            const range = 'A1:B10'; // Update according to your data range
+            const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetID}/values/${range}?key=YOUR_API_KEY`; // Add your API key
+
+            const response = await fetch(url);
+            const data = await response.json();
+
+            if (data.values) {
+                const pushUps = data.values.reduce((sum, row) => sum + Number(row[1]), 0);
+                const average = pushUps / data.values.length;
+
+                document.getElementById('totalPushUps').querySelector('span').textContent = pushUps;
+                document.getElementById('averagePushUps').querySelector('span').textContent = average;
+
+                // Prepare data for chart
+                const labels = data.values.map(row => row[0]);
+                const counts = data.values.map(row => row[1]);
+                renderChart(labels, counts);
+            }
+        }
+
+        function renderChart(labels, data) {
+            const ctx = document.getElementById('pushUpsChart').getContext('2d');
+            const chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Push Ups',
+                        data: data,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 2,
+                        fill: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        fetchData();
+    </script>
+</body>
+</html>
