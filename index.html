@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -13,458 +14,767 @@
             box-sizing: border-box;
         }
 
-        body {
-            background: #0f0f0f;
-            color: #e0e0e0;
-            min-height: 100vh;
-            padding: 20px 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+```
+    body {
+        background: #0f0f0f;
+        color: #e0e0e0;
+        min-height: 100vh;
+        padding: 20px 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
 
+    .dashboard-container {
+        background: #1a1a1a;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+        padding: 40px 20px;
+        margin-top: 20px;
+        margin-bottom: 40px;
+        border: 1px solid #2a2a2a;
+    }
+
+    .stat-card {
+        background: linear-gradient(135deg, #2d3561 0%, #1e2747 100%);
+        color: #ffffff;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 20px;
+        text-align: center;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        border: 1px solid #3a4570;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+    }
+
+    .stat-card h3 {
+        font-size: 13px;
+        margin-bottom: 10px;
+        opacity: 0.85;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: #a8b5ff;
+    }
+
+    .stat-card .number {
+        font-size: 42px;
+        font-weight: bold;
+        margin: 10px 0;
+        color: #4a7fff;
+    }
+
+    .stat-card .subtitle {
+        font-size: 12px;
+        color: #b0b0b0;
+        margin-top: 5px;
+    }
+
+    .projection-card {
+        background: linear-gradient(135deg, #3d2561 0%, #2e1747 100%);
+        border: 1px solid #5a4570;
+    }
+
+    .projection-card .number {
+        color: #9d7fff;
+    }
+
+    .chart-container {
+        position: relative;
+        height: 400px;
+        margin: 30px 0;
+        background: #151515;
+        border-radius: 12px;
+        padding: 20px;
+        border: 1px solid #2a2a2a;
+    }
+
+    h1 {
+        color: #ffffff;
+        text-align: center;
+        margin-bottom: 10px;
+        font-weight: bold;
+        font-size: 32px;
+        text-shadow: 0 2px 10px rgba(102, 126, 234, 0.3);
+    }
+
+    .header-subtitle {
+        color: #b0b0b0;
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 16px;
+    }
+
+    .section-title {
+        color: #e0e0e0;
+        margin-top: 30px;
+        margin-bottom: 20px;
+        font-weight: 600;
+        border-bottom: 2px solid #4a7fff;
+        padding-bottom: 10px;
+        font-size: 18px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .insight-box {
+        background: #1e1e1e;
+        border-left: 4px solid #4a7fff;
+        padding: 15px;
+        margin: 15px 0;
+        border-radius: 6px;
+    }
+
+    .insight-box h4 {
+        color: #4a7fff;
+        font-size: 14px;
+        margin-bottom: 8px;
+        font-weight: 600;
+    }
+
+    .insight-box p {
+        color: #c0c0c0;
+        font-size: 13px;
+        margin: 0;
+    }
+
+    .alert {
+        border-radius: 8px;
+        border: 1px solid #3a3a3a;
+    }
+
+    .alert-info {
+        background-color: #1a2f4a;
+        color: #a8d5ff;
+        border-color: #2a4a6a;
+    }
+
+    .alert-danger {
+        background-color: #4a1a1a;
+        color: #ff9999;
+        border-color: #6a2a2a;
+    }
+
+    .alert strong {
+        color: #ffffff;
+    }
+
+    .progress-bar-container {
+        background: #2a2a2a;
+        height: 30px;
+        border-radius: 15px;
+        overflow: hidden;
+        margin: 20px 0;
+    }
+
+    .progress-bar-fill {
+        background: linear-gradient(90deg, #4a7fff, #667eea);
+        height: 100%;
+        transition: width 1s ease;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding-right: 15px;
+        color: white;
+        font-weight: bold;
+        font-size: 12px;
+    }
+
+    ::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: #1a1a1a;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: #4a7fff;
+        border-radius: 5px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: #667eea;
+    }
+
+    @media (max-width: 768px) {
         .dashboard-container {
-            background: #1a1a1a;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.7);
-            padding: 40px 20px;
-            margin-top: 20px;
-            margin-bottom: 40px;
-            border: 1px solid #2a2a2a;
-        }
-
-        .stat-card {
-            background: linear-gradient(135deg, #2d3561 0%, #1e2747 100%);
-            color: #ffffff;
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-            border: 1px solid #3a4570;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
-        }
-
-        .stat-card h3 {
-            font-size: 13px;
-            margin-bottom: 10px;
-            opacity: 0.85;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: #a8b5ff;
-        }
-
-        .stat-card .number {
-            font-size: 42px;
-            font-weight: bold;
-            margin: 10px 0;
-            color: #4a7fff;
-        }
-
-        .chart-container {
-            position: relative;
-            height: 400px;
-            margin: 30px 0;
-            background: #151515;
-            border-radius: 12px;
-            padding: 20px;
-            border: 1px solid #2a2a2a;
+            padding: 20px 15px;
         }
 
         h1 {
-            color: #ffffff;
-            text-align: center;
-            margin-bottom: 10px;
-            font-weight: bold;
-            font-size: 32px;
-            text-shadow: 0 2px 10px rgba(102, 126, 234, 0.3);
+            font-size: 24px;
         }
 
-        .header-subtitle {
-            color: #b0b0b0;
-            text-align: center;
-            margin-bottom: 30px;
-            font-size: 16px;
+        .stat-card {
+            padding: 15px;
+        }
+
+        .stat-card .number {
+            font-size: 32px;
+        }
+
+        .chart-container {
+            height: 300px;
+            padding: 15px;
         }
 
         .section-title {
-            color: #e0e0e0;
-            margin-top: 30px;
-            margin-bottom: 20px;
-            font-weight: 600;
-            border-bottom: 2px solid #4a7fff;
-            padding-bottom: 10px;
-            font-size: 18px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            font-size: 16px;
         }
+    }
+</style>
+```
 
-        .alert {
-            border-radius: 8px;
-            border: 1px solid #3a3a3a;
-        }
-
-        .alert-info {
-            background-color: #1a2f4a;
-            color: #a8d5ff;
-            border-color: #2a4a6a;
-        }
-
-        .alert-danger {
-            background-color: #4a1a1a;
-            color: #ff9999;
-            border-color: #6a2a2a;
-        }
-
-        .alert strong {
-            color: #ffffff;
-        }
-
-        /* Chart.js custom styling */
-        canvas {
-            filter: invert(0);
-        }
-
-        .dark-mode-chart {
-            background: transparent;
-        }
-
-        /* Scrollbar styling */
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: #1a1a1a;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: #4a7fff;
-            border-radius: 5px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: #667eea;
-        }
-
-        @media (max-width: 768px) {
-            .dashboard-container {
-                padding: 20px 15px;
-            }
-
-            h1 {
-                font-size: 24px;
-            }
-
-            .stat-card {
-                padding: 15px;
-            }
-
-            .stat-card .number {
-                font-size: 32px;
-            }
-
-            .chart-container {
-                height: 300px;
-                padding: 15px;
-            }
-
-            .section-title {
-                font-size: 16px;
-            }
-        }
-    </style>
 </head>
 <body>
     <div class="container-fluid">
         <h1>🔥 2026 Push Ups Challenge</h1>
         <p class="header-subtitle">Track your daily progress and stay motivated!</p>
-        
-        <div class="dashboard-container">
-            <div class="row">
-                <div class="col-md-3 col-6">
-                    <div class="stat-card">
-                        <h3>Total Push Ups</h3>
-                        <div class="number" id="totalPushUps">-</div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-6">
-                    <div class="stat-card">
-                        <h3>Average Daily</h3>
-                        <div class="number" id="averagePushUps">-</div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-6">
-                    <div class="stat-card">
-                        <h3>Best Day</h3>
-                        <div class="number" id="bestDay">-</div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-6">
-                    <div class="stat-card">
-                        <h3>Current Streak</h3>
-                        <div class="number" id="streak">-</div>
-                    </div>
+
+```
+    <div class="dashboard-container">
+        <div class="row">
+            <div class="col-md-3 col-6">
+                <div class="stat-card">
+                    <h3>Total Push Ups</h3>
+                    <div class="number" id="totalPushUps">-</div>
+                    <div class="subtitle" id="totalSubtitle"></div>
                 </div>
             </div>
-
-            <h2 class="section-title">Daily Progress</h2>
-            <div class="chart-container">
-                <canvas id="pushUpsChart"></canvas>
+            <div class="col-md-3 col-6">
+                <div class="stat-card">
+                    <h3>Average Daily</h3>
+                    <div class="number" id="averagePushUps">-</div>
+                    <div class="subtitle" id="avgSubtitle"></div>
+                </div>
             </div>
-
-            <h2 class="section-title">Weekly Breakdown</h2>
-            <div class="chart-container">
-                <canvas id="weeklyChart"></canvas>
+            <div class="col-md-3 col-6">
+                <div class="stat-card">
+                    <h3>Best Day</h3>
+                    <div class="number" id="bestDay">-</div>
+                    <div class="subtitle" id="bestDayDate"></div>
+                </div>
             </div>
-
-            <div class="alert alert-info" id="loadingStatus">
-                <strong>Loading data...</strong> Pulling your latest push up data from the spreadsheet.
+            <div class="col-md-3 col-6">
+                <div class="stat-card">
+                    <h3>Current Streak</h3>
+                    <div class="number" id="streak">-</div>
+                    <div class="subtitle" id="streakSubtitle"></div>
+                </div>
             </div>
         </div>
+
+        <h2 class="section-title">📊 Year-End Projection</h2>
+        <div class="row">
+            <div class="col-md-4 col-12">
+                <div class="stat-card projection-card">
+                    <h3>Projected Year Total</h3>
+                    <div class="number" id="projectedTotal">-</div>
+                    <div class="subtitle" id="projectionSubtitle"></div>
+                </div>
+            </div>
+            <div class="col-md-4 col-12">
+                <div class="stat-card projection-card">
+                    <h3>Days Remaining</h3>
+                    <div class="number" id="daysRemaining">-</div>
+                    <div class="subtitle">in 2026</div>
+                </div>
+            </div>
+            <div class="col-md-4 col-12">
+                <div class="stat-card projection-card">
+                    <h3>Target Daily Avg</h3>
+                    <div class="number" id="targetDaily">-</div>
+                    <div class="subtitle" id="targetSubtitle"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="progress-bar-container">
+            <div class="progress-bar-fill" id="yearProgress" style="width: 0%">0%</div>
+        </div>
+
+        <h2 class="section-title">⏰ AM vs PM Performance</h2>
+        <div class="row">
+            <div class="col-md-4 col-6">
+                <div class="stat-card">
+                    <h3>Total AM Push Ups</h3>
+                    <div class="number" id="totalAM">-</div>
+                    <div class="subtitle" id="amPercentage"></div>
+                </div>
+            </div>
+            <div class="col-md-4 col-6">
+                <div class="stat-card">
+                    <h3>Total PM Push Ups</h3>
+                    <div class="number" id="totalPM">-</div>
+                    <div class="subtitle" id="pmPercentage"></div>
+                </div>
+            </div>
+            <div class="col-md-4 col-12">
+                <div class="stat-card">
+                    <h3>Preferred Time</h3>
+                    <div class="number" id="preferredTime">-</div>
+                    <div class="subtitle" id="preferredSubtitle"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <canvas id="amPmChart"></canvas>
+        </div>
+
+        <h2 class="section-title">📈 Daily Progress</h2>
+        <div class="chart-container">
+            <canvas id="pushUpsChart"></canvas>
+        </div>
+
+        <h2 class="section-title">📅 Weekly Breakdown</h2>
+        <div class="chart-container">
+            <canvas id="weeklyChart"></canvas>
+        </div>
+
+        <h2 class="section-title">💡 Key Insights</h2>
+        <div id="insightsContainer"></div>
+
+        <div class="alert alert-info" id="loadingStatus">
+            <strong>Loading data...</strong> Pulling your latest push up data from the spreadsheet.
+        </div>
     </div>
+</div>
 
-    <script>
-        let dailyChart = null;
-        let weeklyChart = null;
+<script>
+    let dailyChart = null;
+    let weeklyChart = null;
+    let amPmChart = null;
 
-        // Dark mode chart configuration
-        const chartDefaults = {
-            color: '#e0e0e0',
-            borderColor: '#2a2a2a',
-            gridColor: '#2a2a2a'
-        };
+    const chartDefaults = {
+        color: '#e0e0e0',
+        borderColor: '#2a2a2a',
+        gridColor: '#2a2a2a'
+    };
 
-        async function fetchDataFromSheet() {
-            const sheetID = '14KN-KDPbNyXk-lSJ_yNqx4LhIdgiUp2lwoHEsEmJiPQ';
-            const sheetName = 'RawData';
+    async function fetchDataFromSheet() {
+        const sheetID = '14KN-KDPbNyXk-lSJ_yNqx4LhIdgiUp2lwoHEsEmJiPQ';
+        const sheetName = 'RawData';
+        
+        try {
+            const apiUrl = `https://opensheet.elk.sh/${sheetID}/${sheetName}`;
+            const response = await fetch(apiUrl);
+            if (!response.ok) {
+                throw new Error('Failed to fetch data');
+            }
             
-            try {
-                // Using OpenSheet API - no API key required, no setup needed
-                const apiUrl = `https://opensheet.elk.sh/${sheetID}/${sheetName}`;
-                
-                const response = await fetch(apiUrl);
-                if (!response.ok) {
-                    throw new Error('Failed to fetch data');
-                }
-                
-                const data = await response.json();
+            const data = await response.json();
 
-                if (data && data.length > 0) {
-                    processData(data);
-                    document.getElementById('loadingStatus').style.display = 'none';
-                } else {
-                    showError('No data found in spreadsheet.');
-                }
-            } catch (error) {
-                showError('Unable to load data. Please ensure the spreadsheet is publicly shared (anyone with link can view).');
-                console.error('Fetch error:', error);
+            if (data && data.length > 0) {
+                processData(data);
+                document.getElementById('loadingStatus').style.display = 'none';
+            } else {
+                showError('No data found in spreadsheet.');
+            }
+        } catch (error) {
+            showError('Unable to load data. Please ensure the spreadsheet is publicly shared (anyone with link can view).');
+            console.error('Fetch error:', error);
+        }
+    }
+
+    function processData(data) {
+        const processedData = data.map(row => {
+            return {
+                date: row['Date'] || '',
+                am: parseInt(row['AM Push-Ups']) || 0,
+                pm: parseInt(row['PM Push-Ups']) || 0,
+                total: parseInt(row['Total']) || 0
+            };
+        }).filter(item => item.date && item.total > 0);
+
+        if (processedData.length === 0) {
+            showError('No valid data found. Please check your spreadsheet format.');
+            return;
+        }
+
+        // Basic stats
+        const total = processedData.reduce((sum, item) => sum + item.total, 0);
+        const average = Math.round(total / processedData.length);
+        const bestDayValue = Math.max(...processedData.map(item => item.total));
+        const bestDayData = processedData.find(item => item.total === bestDayValue);
+        
+        // Streak calculation
+        let streak = 0;
+        for (let i = processedData.length - 1; i >= 0; i--) {
+            if (processedData[i].total > 0) {
+                streak++;
+            } else {
+                break;
             }
         }
 
-        function processData(data) {
-            // The data comes with headers: Date, Day, AM Push-Ups, PM Push-Ups, Total, Notes
-            // We need the Date (column 0) and Total (column 4)
-            const processedData = data.map(row => {
-                return {
-                    date: row['Date'] || '',
-                    total: parseInt(row['Total']) || 0
-                };
-            }).filter(item => item.date && item.total > 0);
+        // AM/PM stats
+        const totalAM = processedData.reduce((sum, item) => sum + item.am, 0);
+        const totalPM = processedData.reduce((sum, item) => sum + item.pm, 0);
+        const amPercentage = Math.round((totalAM / total) * 100);
+        const pmPercentage = Math.round((totalPM / total) * 100);
 
-            if (processedData.length === 0) {
-                showError('No valid data found. Please check your spreadsheet format.');
-                return;
-            }
+        // Year projection
+        const daysInYear = 366; // 2026 is not a leap year, but using 365
+        const daysPassed = processedData.length;
+        const daysRemaining = 365 - daysPassed;
+        const projectedYearTotal = Math.round((total / daysPassed) * 365);
+        const targetDailyForGoal = daysRemaining > 0 ? Math.ceil((projectedYearTotal - total) / daysRemaining) : 0;
 
-            const total = processedData.reduce((sum, item) => sum + item.total, 0);
-            const average = Math.round(total / processedData.length);
-            const bestDay = Math.max(...processedData.map(item => item.total));
-            
-            let streak = 0;
-            for (let i = processedData.length - 1; i >= 0; i--) {
-                if (processedData[i].total > 0) {
-                    streak++;
-                } else {
-                    break;
-                }
-            }
+        // Update DOM
+        document.getElementById('totalPushUps').textContent = total.toLocaleString();
+        document.getElementById('totalSubtitle').textContent = `${daysPassed} days tracked`;
+        document.getElementById('averagePushUps').textContent = average;
+        document.getElementById('avgSubtitle').textContent = `per day`;
+        document.getElementById('bestDay').textContent = bestDayValue;
+        document.getElementById('bestDayDate').textContent = bestDayData.date;
+        document.getElementById('streak').textContent = streak;
+        document.getElementById('streakSubtitle').textContent = streak === 1 ? 'day' : 'days';
 
-            document.getElementById('totalPushUps').textContent = total;
-            document.getElementById('averagePushUps').textContent = average;
-            document.getElementById('bestDay').textContent = bestDay;
-            document.getElementById('streak').textContent = streak + ' days';
+        // Projection stats
+        document.getElementById('projectedTotal').textContent = projectedYearTotal.toLocaleString();
+        document.getElementById('projectionSubtitle').textContent = `at current pace`;
+        document.getElementById('daysRemaining').textContent = daysRemaining;
+        document.getElementById('targetDaily').textContent = average;
+        document.getElementById('targetSubtitle').textContent = `to maintain pace`;
 
-            const labels = processedData.map(item => item.date);
-            const pushupCounts = processedData.map(item => item.total);
+        // Year progress
+        const yearProgress = Math.round((daysPassed / 365) * 100);
+        document.getElementById('yearProgress').style.width = yearProgress + '%';
+        document.getElementById('yearProgress').textContent = yearProgress + '%';
 
-            renderDailyChart(labels, pushupCounts);
-            renderWeeklyChart(processedData);
+        // AM/PM stats
+        document.getElementById('totalAM').textContent = totalAM.toLocaleString();
+        document.getElementById('amPercentage').textContent = `${amPercentage}% of total`;
+        document.getElementById('totalPM').textContent = totalPM.toLocaleString();
+        document.getElementById('pmPercentage').textContent = `${pmPercentage}% of total`;
+        
+        const preferredTime = totalAM > totalPM ? '🌅 AM' : '🌙 PM';
+        const preferredDiff = Math.abs(totalAM - totalPM);
+        document.getElementById('preferredTime').textContent = preferredTime;
+        document.getElementById('preferredSubtitle').textContent = `${preferredDiff} more push-ups`;
+
+        // Generate insights
+        generateInsights(processedData, {
+            total, average, bestDayValue, streak, totalAM, totalPM, 
+            projectedYearTotal, daysPassed, daysRemaining
+        });
+
+        // Render charts
+        const labels = processedData.map(item => item.date);
+        const pushupCounts = processedData.map(item => item.total);
+        renderDailyChart(labels, pushupCounts);
+        renderWeeklyChart(processedData);
+        renderAMPMChart(processedData);
+    }
+
+    function generateInsights(data, stats) {
+        const container = document.getElementById('insightsContainer');
+        const insights = [];
+
+        // Consistency insight
+        const consistency = Math.round((stats.streak / data.length) * 100);
+        if (consistency > 80) {
+            insights.push({
+                title: '🔥 Excellent Consistency',
+                text: `You're maintaining a ${stats.streak}-day streak! That's ${consistency}% consistency. Keep it up!`
+            });
         }
 
-        function renderDailyChart(labels, data) {
-            const ctx = document.getElementById('pushUpsChart').getContext('2d');
-            
-            if (dailyChart) {
-                dailyChart.destroy();
-            }
-            
-            dailyChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Daily Push Ups',
-                        data: data,
-                        borderColor: '#4a7fff',
-                        backgroundColor: 'rgba(74, 127, 255, 0.1)',
-                        borderWidth: 3,
-                        fill: true,
-                        tension: 0.4,
-                        pointRadius: 5,
-                        pointBackgroundColor: '#4a7fff',
-                        pointBorderColor: '#1a1a1a',
-                        pointBorderWidth: 2,
-                        pointHoverRadius: 7,
-                        pointHoverBackgroundColor: '#667eea'
-                    }]
+        // Progression insight
+        const recentAvg = Math.round(data.slice(-7).reduce((sum, item) => sum + item.total, 0) / 7);
+        const earlyAvg = Math.round(data.slice(0, 7).reduce((sum, item) => sum + item.total, 0) / 7);
+        const improvement = recentAvg - earlyAvg;
+        if (improvement > 0) {
+            insights.push({
+                title: '📈 You\'re Improving',
+                text: `Your 7-day average (${recentAvg}) is ${improvement} push-ups higher than your first week (${earlyAvg})!`
+            });
+        } else if (improvement < 0) {
+            insights.push({
+                title: '💪 Room for Growth',
+                text: `Your recent 7-day average (${recentAvg}) is ${Math.abs(improvement)} below your first week. Consider ramping back up!`
+            });
+        }
+
+        // AM/PM insight
+        const amPmRatio = (stats.totalAM / stats.totalPM).toFixed(2);
+        if (amPmRatio > 1.5) {
+            insights.push({
+                title: '🌅 Morning Person',
+                text: `You do ${Math.round((stats.totalAM / (stats.totalAM + stats.totalPM)) * 100)}% of your push-ups in the morning. Great way to start the day!`
+            });
+        } else if (amPmRatio < 0.67) {
+            insights.push({
+                title: '🌙 Night Owl',
+                text: `You do ${Math.round((stats.totalPM / (stats.totalAM + stats.totalPM)) * 100)}% of your push-ups in the evening. Strong finish to your days!`
+            });
+        } else {
+            insights.push({
+                title: '⚖️ Balanced Schedule',
+                text: `You maintain a good balance between AM (${stats.totalAM}) and PM (${stats.totalPM}) workouts.`
+            });
+        }
+
+        // Projection insight
+        if (stats.projectedYearTotal >= 50000) {
+            insights.push({
+                title: '🎯 Milestone Alert',
+                text: `At your current pace, you're on track for ${stats.projectedYearTotal.toLocaleString()} push-ups this year! That's ${Math.round(stats.projectedYearTotal / 1000)}K!`
+            });
+        }
+
+        // Days remaining insight
+        const pushUpsToMilestone = 50000 - stats.total;
+        const dailyNeeded = Math.ceil(pushUpsToMilestone / stats.daysRemaining);
+        if (pushUpsToMilestone > 0 && dailyNeeded <= stats.average * 1.2) {
+            insights.push({
+                title: '🏆 50K Goal Achievable',
+                text: `You need ${dailyNeeded} push-ups per day to hit 50,000 by year end. You're averaging ${stats.average}, so you're close!`
+            });
+        }
+
+        container.innerHTML = insights.map(insight => `
+            <div class="insight-box">
+                <h4>${insight.title}</h4>
+                <p>${insight.text}</p>
+            </div>
+        `).join('');
+    }
+
+    function renderDailyChart(labels, data) {
+        const ctx = document.getElementById('pushUpsChart').getContext('2d');
+        
+        if (dailyChart) {
+            dailyChart.destroy();
+        }
+        
+        dailyChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Daily Push Ups',
+                    data: data,
+                    borderColor: '#4a7fff',
+                    backgroundColor: 'rgba(74, 127, 255, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 5,
+                    pointBackgroundColor: '#4a7fff',
+                    pointBorderColor: '#1a1a1a',
+                    pointBorderWidth: 2,
+                    pointHoverRadius: 7,
+                    pointHoverBackgroundColor: '#667eea'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        labels: {
+                            color: '#e0e0e0',
+                            font: { size: 12 }
+                        }
+                    }
                 },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: true,
-                            labels: {
-                                color: '#e0e0e0',
-                                font: { size: 12 }
-                            }
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            color: '#a0a0a0'
                         },
-                        filler: {
-                            propagate: true
+                        grid: {
+                            color: '#2a2a2a',
+                            drawBorder: false
                         }
                     },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: {
-                                color: '#a0a0a0',
-                                stepSize: Math.max(1, Math.ceil(Math.max(...data) / 5))
-                            },
-                            grid: {
-                                color: '#2a2a2a',
-                                drawBorder: false
-                            }
+                    x: {
+                        ticks: {
+                            color: '#a0a0a0',
+                            maxRotation: 45,
+                            minRotation: 45
                         },
-                        x: {
-                            ticks: {
-                                color: '#a0a0a0'
-                            },
-                            grid: {
-                                color: '#2a2a2a',
-                                drawBorder: false
-                            }
+                        grid: {
+                            color: '#2a2a2a',
+                            drawBorder: false
                         }
                     }
                 }
-            });
-        }
-
-        function renderWeeklyChart(data) {
-            const weeklyData = {};
-            const weekLabels = {};
-            
-            data.forEach(item => {
-                // Parse date in format "D-MMM-YYYY" (1-Jan-2026)
-                const dateParts = item.date.split('-');
-                const monthMap = {
-                    'Jan': 0, 'Feb': 1, 'Mar': 2, 'Apr': 3, 'May': 4, 'Jun': 5,
-                    'Jul': 6, 'Aug': 7, 'Sep': 8, 'Oct': 9, 'Nov': 10, 'Dec': 11
-                };
-                const date = new Date(2026, monthMap[dateParts[1]], parseInt(dateParts[0]));
-                const weekStart = new Date(date);
-                weekStart.setDate(date.getDate() - date.getDay());
-                const weekKey = weekStart.toISOString().split('T')[0];
-                
-                if (!weeklyData[weekKey]) {
-                    weeklyData[weekKey] = 0;
-                    weekLabels[weekKey] = `Week of ${weekKey}`;
-                }
-                weeklyData[weekKey] += item.total;
-            });
-
-            const weeks = Object.keys(weeklyData).sort();
-            const weeklyCounts = weeks.map(week => weeklyData[week]);
-            const weekLabelsList = weeks.map(week => weekLabels[week]);
-
-            const ctx = document.getElementById('weeklyChart').getContext('2d');
-            
-            if (weeklyChart) {
-                weeklyChart.destroy();
             }
+        });
+    }
+
+    function renderWeeklyChart(data) {
+        const weeklyData = {};
+        
+        data.forEach(item => {
+            const dateParts = item.date.split('-');
+            const monthMap = {
+                'Jan': 0, 'Feb': 1, 'Mar': 2, 'Apr': 3, 'May': 4, 'Jun': 5,
+                'Jul': 6, 'Aug': 7, 'Sep': 8, 'Oct': 9, 'Nov': 10, 'Dec': 11
+            };
+            const date = new Date(2026, monthMap[dateParts[1]], parseInt(dateParts[0]));
+            const weekStart = new Date(date);
+            weekStart.setDate(date.getDate() - date.getDay());
+            const weekKey = weekStart.toISOString().split('T')[0];
             
-            weeklyChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: weekLabelsList,
-                    datasets: [{
-                        label: 'Weekly Total Push Ups',
-                        data: weeklyCounts,
+            if (!weeklyData[weekKey]) {
+                weeklyData[weekKey] = 0;
+            }
+            weeklyData[weekKey] += item.total;
+        });
+
+        const weeks = Object.keys(weeklyData).sort();
+        const weeklyCounts = weeks.map(week => weeklyData[week]);
+        const weekLabels = weeks.map(week => `Week ${weeks.indexOf(week) + 1}`);
+
+        const ctx = document.getElementById('weeklyChart').getContext('2d');
+        
+        if (weeklyChart) {
+            weeklyChart.destroy();
+        }
+        
+        weeklyChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: weekLabels,
+                datasets: [{
+                    label: 'Weekly Total',
+                    data: weeklyCounts,
+                    backgroundColor: 'rgba(74, 127, 255, 0.7)',
+                    borderColor: '#4a7fff',
+                    borderWidth: 2,
+                    borderRadius: 6,
+                    hoverBackgroundColor: 'rgba(102, 126, 234, 0.9)'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        labels: {
+                            color: '#e0e0e0',
+                            font: { size: 12 }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            color: '#a0a0a0'
+                        },
+                        grid: {
+                            color: '#2a2a2a',
+                            drawBorder: false
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            color: '#a0a0a0'
+                        },
+                        grid: {
+                            color: '#2a2a2a',
+                            drawBorder: false
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    function renderAMPMChart(data) {
+        const ctx = document.getElementById('amPmChart').getContext('2d');
+        
+        if (amPmChart) {
+            amPmChart.destroy();
+        }
+        
+        const labels = data.map(item => item.date);
+        const amData = data.map(item => item.am);
+        const pmData = data.map(item => item.pm);
+
+        amPmChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: 'AM Push-Ups',
+                        data: amData,
+                        backgroundColor: 'rgba(255, 193, 7, 0.7)',
+                        borderColor: '#ffc107',
+                        borderWidth: 2
+                    },
+                    {
+                        label: 'PM Push-Ups',
+                        data: pmData,
                         backgroundColor: 'rgba(74, 127, 255, 0.7)',
                         borderColor: '#4a7fff',
-                        borderWidth: 2,
-                        borderRadius: 6,
-                        hoverBackgroundColor: 'rgba(102, 126, 234, 0.9)'
-                    }]
+                        borderWidth: 2
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        labels: {
+                            color: '#e0e0e0',
+                            font: { size: 12 }
+                        }
+                    }
                 },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: true,
-                            labels: {
-                                color: '#e0e0e0',
-                                font: { size: 12 }
-                            }
+                scales: {
+                    y: {
+                        stacked: true,
+                        beginAtZero: true,
+                        ticks: {
+                            color: '#a0a0a0'
+                        },
+                        grid: {
+                            color: '#2a2a2a',
+                            drawBorder: false
                         }
                     },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: {
-                                color: '#a0a0a0'
-                            },
-                            grid: {
-                                color: '#2a2a2a',
-                                drawBorder: false
-                            }
+                    x: {
+                        stacked: true,
+                        ticks: {
+                            color: '#a0a0a0',
+                            maxRotation: 45,
+                            minRotation: 45
                         },
-                        x: {
-                            ticks: {
-                                color: '#a0a0a0'
-                            },
-                            grid: {
-                                color: '#2a2a2a',
-                                drawBorder: false
-                            }
+                        grid: {
+                            color: '#2a2a2a',
+                            drawBorder: false
                         }
                     }
                 }
-            });
-        }
+            }
+        });
+    }
 
-        function showError(message) {
-            document.getElementById('loadingStatus').innerHTML = `<strong>⚠️ Error:</strong> ${message}`;
-            document.getElementById('loadingStatus').classList.remove('alert-info');
-            document.getElementById('loadingStatus').classList.add('alert-danger');
-        }
+    function showError(message) {
+        document.getElementById('loadingStatus').innerHTML = `<strong>⚠️ Error:</strong> ${message}`;
+        document.getElementById('loadingStatus').classList.remove('alert-info');
+        document.getElementById('loadingStatus').classList.add('alert-danger');
+    }
 
-        window.addEventListener('load', fetchDataFromSheet);
-    </script>
+    window.addEventListener('load', fetchDataFromSheet);
+</script>
+```
+
 </body>
 </html>
