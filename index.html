@@ -5,59 +5,88 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>2026 Push Ups Challenge Dashboard</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
+        :root {
+            --bg-base: #0a0a0c;
+            --bg-surface: #141418;
+            --bg-elevated: #1c1c22;
+            --border: #2e2e38;
+            --text-primary: #f0f0f2;
+            --text-secondary: #8a8a96;
+            --text-muted: #5a5a64;
+            --accent: #4a7fff;
+            --accent-glow: rgba(74,127,255,0.25);
+            --accent-purple: #9d7fff;
+            --card-blue: linear-gradient(135deg, #1e2540 0%, #162038 100%);
+            --card-purple: linear-gradient(135deg, #2a1e3d 0%, #1f1630 100%);
+        }
 
 ```
-    :root {
-        --bg-base: #0a0a0c;
-        --bg-surface: #141418;
-        --bg-elevated: #1c1c22;
-        --bg-input: #222228;
-        --border: #2e2e38;
-        --text-primary: #f0f0f2;
-        --text-secondary: #8a8a96;
-        --text-muted: #5a5a64;
-        --accent: #4a7fff;
-        --accent-glow: rgba(74, 127, 255, 0.25);
-        --accent-purple: #9d7fff;
-        --accent-gold: #ffc107;
-        --green: #4caf6e;
-        --red: #ff6b6b;
-        --card-blue: linear-gradient(135deg, #1e2540 0%, #162038 100%);
-        --card-purple: linear-gradient(135deg, #2a1e3d 0%, #1f1630 100%);
-    }
-
-    * {
+    *, *::before, *::after {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
     }
 
-    body {
-        background: var(--bg-base) !important;
-        color: var(--text-primary) !important;
+    html, body {
+        background: var(--bg-base);
+        color: var(--text-primary);
         min-height: 100vh;
-        padding: 28px 0 60px;
         font-family: 'Inter', sans-serif;
+    }
+
+    body {
+        padding: 28px 16px 60px;
+    }
+
+    /* ─── LAYOUT ─── */
+    .wrap {
+        max-width: 1140px;
+        margin: 0 auto;
+    }
+
+    .row-4 {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+    }
+
+    .row-3 {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+    }
+
+    .row-3-mixed {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+    }
+
+    @media (max-width: 768px) {
+        .row-4 { grid-template-columns: repeat(2, 1fr); }
+        .row-3 { grid-template-columns: 1fr; }
+        .row-3-mixed { grid-template-columns: repeat(2, 1fr); }
+        .row-3-mixed .span-full { grid-column: 1 / -1; }
     }
 
     /* ─── HEADER ─── */
     .header {
         text-align: center;
-        margin-bottom: 32px;
+        margin-bottom: 36px;
         position: relative;
+        padding-bottom: 20px;
     }
 
     .header::after {
         content: '';
         position: absolute;
-        bottom: -16px;
+        bottom: 0;
         left: 50%;
         transform: translateX(-50%);
-        width: 60px;
+        width: 48px;
         height: 3px;
         background: var(--accent);
         border-radius: 2px;
@@ -66,7 +95,7 @@
     h1 {
         font-family: 'Oswald', sans-serif;
         color: var(--text-primary);
-        font-size: 34px;
+        font-size: 32px;
         font-weight: 700;
         letter-spacing: 1.5px;
         text-transform: uppercase;
@@ -74,18 +103,16 @@
 
     .header-subtitle {
         color: var(--text-secondary);
-        margin-top: 8px;
+        margin-top: 6px;
         font-size: 14px;
-        letter-spacing: 0.3px;
     }
 
     /* ─── DASHBOARD SHELL ─── */
-    .dashboard-container {
+    .dashboard {
         background: var(--bg-surface);
         border-radius: 16px;
-        box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
-        padding: 36px 24px;
-        margin-top: 8px;
+        box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+        padding: 32px 24px;
         border: 1px solid var(--border);
     }
 
@@ -93,8 +120,7 @@
     .stat-card {
         background: var(--card-blue);
         border-radius: 12px;
-        padding: 20px 16px;
-        margin-bottom: 18px;
+        padding: 20px 14px;
         text-align: center;
         border: 1px solid #2a3358;
         transition: transform 0.25s ease, box-shadow 0.25s ease;
@@ -112,16 +138,15 @@
         letter-spacing: 1px;
         color: var(--accent);
         margin-bottom: 8px;
-        opacity: 0.9;
     }
 
     .stat-card .number {
         font-family: 'Oswald', sans-serif;
-        font-size: 40px;
+        font-size: 38px;
         font-weight: 700;
         color: #fff;
         line-height: 1.1;
-        margin: 6px 0;
+        margin: 4px 0;
     }
 
     .stat-card .subtitle {
@@ -134,13 +159,12 @@
         background: var(--card-purple);
         border-color: #3d2e58;
     }
-
-    .projection-card h3 { color: var(--accent-purple); }
+    .projection-card h3      { color: var(--accent-purple); }
     .projection-card .number { color: var(--accent-purple); }
 
     /* ─── GOAL PROGRESS BAR ─── */
     .goal-progress-wrap {
-        margin: 24px 0 30px;
+        margin: 28px 0 32px;
     }
 
     .goal-progress-header {
@@ -151,7 +175,7 @@
     }
 
     .goal-progress-header .label {
-        font-size: 13px;
+        font-size: 12px;
         color: var(--text-secondary);
         font-weight: 600;
         text-transform: uppercase;
@@ -165,7 +189,7 @@
         color: var(--accent);
     }
 
-    .progress-bar-container {
+    .progress-track {
         background: var(--bg-elevated);
         height: 14px;
         border-radius: 7px;
@@ -173,7 +197,7 @@
         border: 1px solid var(--border);
     }
 
-    .progress-bar-fill {
+    .progress-fill {
         background: linear-gradient(90deg, var(--accent), #667eea);
         height: 100%;
         border-radius: 7px;
@@ -181,10 +205,10 @@
         position: relative;
     }
 
-    .progress-bar-fill::after {
+    .progress-fill::after {
         content: '';
         position: absolute;
-        top: 0; left: 0; right: 0; bottom: 0;
+        inset: 0;
         background: linear-gradient(90deg, transparent 60%, rgba(255,255,255,0.15));
         border-radius: 7px;
     }
@@ -196,7 +220,7 @@
         margin-bottom: 18px;
         font-family: 'Oswald', sans-serif;
         font-weight: 500;
-        font-size: 16px;
+        font-size: 15px;
         text-transform: uppercase;
         letter-spacing: 1.5px;
         border-bottom: 1px solid var(--border);
@@ -214,21 +238,14 @@
         flex-shrink: 0;
     }
 
-    .section-title:first-of-type { margin-top: 8px; }
+    .section-title:first-of-type { margin-top: 4px; }
 
     /* ─── CHART CONTROLS ─── */
     .chart-header {
         display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 4px;
-        flex-wrap: wrap;
-        gap: 8px;
-    }
-
-    .range-buttons {
-        display: flex;
-        gap: 4px;
+        justify-content: flex-end;
+        margin-bottom: 8px;
+        gap: 6px;
     }
 
     .range-btn {
@@ -238,7 +255,7 @@
         font-size: 11px;
         font-weight: 600;
         letter-spacing: 0.5px;
-        padding: 5px 11px;
+        padding: 5px 12px;
         border-radius: 6px;
         cursor: pointer;
         transition: all 0.2s;
@@ -257,10 +274,10 @@
     }
 
     /* ─── CHART CONTAINER ─── */
-    .chart-container {
+    .chart-box {
         position: relative;
         height: 320px;
-        margin: 16px 0 28px;
+        margin: 0 0 28px;
         background: var(--bg-elevated);
         border-radius: 12px;
         padding: 20px 18px 14px;
@@ -275,14 +292,17 @@
         margin-top: 4px;
     }
 
+    @media (max-width: 600px) {
+        .insights-grid { grid-template-columns: 1fr; }
+    }
+
     .insight-box {
         background: var(--bg-elevated);
+        border: 1px solid var(--border);
         border-left: 3px solid var(--accent);
         padding: 14px 16px;
         border-radius: 8px;
-        border: 1px solid var(--border);
-        border-left: 3px solid var(--accent);
-        transition: border-color 0.2s;
+        transition: border-left-color 0.2s;
     }
 
     .insight-box:hover { border-left-color: #667eea; }
@@ -299,32 +319,31 @@
     .insight-box p {
         color: var(--text-secondary);
         font-size: 13px;
-        margin: 0;
         line-height: 1.45;
     }
 
-    /* ─── ALERTS ─── */
-    .alert {
+    /* ─── STATUS ALERT ─── */
+    .status {
         border-radius: 8px;
         font-size: 13px;
-        margin-top: 24px;
+        margin-top: 28px;
+        padding: 12px 16px;
     }
 
-    .alert-info {
+    .status.info {
         background: #1a2535;
         color: #7ab8e8;
         border: 1px solid #2a4a6a;
     }
 
-    .alert-danger {
+    .status.error {
         background: #3a1818;
         color: #ff9999;
         border: 1px solid #6a2a2a;
     }
 
-    .alert strong { color: #fff; }
+    .status strong { color: #fff; }
 
-    /* ─── CACHE BADGE ─── */
     .cache-badge {
         display: inline-block;
         font-size: 10px;
@@ -334,30 +353,28 @@
         border-radius: 4px;
         padding: 2px 7px;
         margin-left: 10px;
-        letter-spacing: 0.3px;
     }
 
     /* ─── SCROLLBAR ─── */
-    ::-webkit-scrollbar { width: 8px; }
-    ::-webkit-scrollbar-track { background: var(--bg-base); }
-    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 4px; }
-    ::-webkit-scrollbar-thumb:hover { background: #667eea; }
+    ::-webkit-scrollbar            { width: 8px; }
+    ::-webkit-scrollbar-track      { background: var(--bg-base); }
+    ::-webkit-scrollbar-thumb      { background: var(--accent); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover{ background: #667eea; }
 
-    /* ─── RESPONSIVE ─── */
+    /* ─── RESPONSIVE TWEAKS ─── */
     @media (max-width: 768px) {
-        .dashboard-container { padding: 22px 14px; }
-        h1 { font-size: 26px; }
+        .dashboard { padding: 22px 14px; }
+        h1 { font-size: 24px; }
         .stat-card .number { font-size: 32px; }
-        .chart-container { height: 260px; padding: 14px 10px 10px; }
-        .insights-grid { grid-template-columns: 1fr; }
-        .section-title { font-size: 14px; }
+        .chart-box { height: 260px; padding: 14px 10px 10px; }
+        .section-title { font-size: 13px; }
     }
 </style>
 ```
 
 </head>
 <body>
-<div class="container-fluid">
+<div class="wrap">
 
 ```
 <!-- HEADER -->
@@ -366,131 +383,103 @@
     <p class="header-subtitle">Track your daily progress toward 20,000 push-ups</p>
 </div>
 
-<div class="dashboard-container">
+<div class="dashboard">
 
     <!-- TOP STATS -->
-    <div class="row">
-        <div class="col-md-3 col-6">
-            <div class="stat-card">
-                <h3>Total Push Ups</h3>
-                <div class="number" id="totalPushUps">—</div>
-                <div class="subtitle" id="totalSubtitle"></div>
-            </div>
+    <div class="row-4">
+        <div class="stat-card">
+            <h3>Total Push Ups</h3>
+            <div class="number" id="totalPushUps">—</div>
+            <div class="subtitle" id="totalSubtitle"></div>
         </div>
-        <div class="col-md-3 col-6">
-            <div class="stat-card">
-                <h3>Average Daily</h3>
-                <div class="number" id="averagePushUps">—</div>
-                <div class="subtitle">per day</div>
-            </div>
+        <div class="stat-card">
+            <h3>Average Daily</h3>
+            <div class="number" id="averagePushUps">—</div>
+            <div class="subtitle">per day</div>
         </div>
-        <div class="col-md-3 col-6">
-            <div class="stat-card">
-                <h3>Best Day</h3>
-                <div class="number" id="bestDay">—</div>
-                <div class="subtitle" id="bestDayDate"></div>
-            </div>
+        <div class="stat-card">
+            <h3>Best Day</h3>
+            <div class="number" id="bestDay">—</div>
+            <div class="subtitle" id="bestDayDate"></div>
         </div>
-        <div class="col-md-3 col-6">
-            <div class="stat-card">
-                <h3>Current Streak</h3>
-                <div class="number" id="streak">—</div>
-                <div class="subtitle" id="streakSubtitle">days</div>
-            </div>
+        <div class="stat-card">
+            <h3>Current Streak</h3>
+            <div class="number" id="streak">—</div>
+            <div class="subtitle" id="streakSubtitle">days</div>
         </div>
     </div>
 
-    <!-- GOAL PROGRESS BAR -->
+    <!-- GOAL PROGRESS -->
     <div class="goal-progress-wrap">
         <div class="goal-progress-header">
             <span class="label">Progress toward 20,000 goal</span>
             <span class="pct" id="goalPct">0%</span>
         </div>
-        <div class="progress-bar-container">
-            <div class="progress-bar-fill" id="goalProgressBar" style="width: 0%"></div>
+        <div class="progress-track">
+            <div class="progress-fill" id="goalProgressBar" style="width:0%"></div>
         </div>
     </div>
 
-    <!-- YEAR-END PROJECTION -->
+    <!-- PROJECTION -->
     <h2 class="section-title"><span class="dot"></span> Year-End Projection</h2>
-    <div class="row">
-        <div class="col-md-4 col-12">
-            <div class="stat-card projection-card">
-                <h3>Projected Year Total</h3>
-                <div class="number" id="projectedTotal">—</div>
-                <div class="subtitle">at current pace</div>
-            </div>
+    <div class="row-3">
+        <div class="stat-card projection-card">
+            <h3>Projected Year Total</h3>
+            <div class="number" id="projectedTotal">—</div>
+            <div class="subtitle">at current pace</div>
         </div>
-        <div class="col-md-4 col-12">
-            <div class="stat-card projection-card">
-                <h3>Days Remaining</h3>
-                <div class="number" id="daysRemaining">—</div>
-                <div class="subtitle">in 2026</div>
-            </div>
+        <div class="stat-card projection-card">
+            <h3>Days Remaining</h3>
+            <div class="number" id="daysRemaining">—</div>
+            <div class="subtitle">in 2026</div>
         </div>
-        <div class="col-md-4 col-12">
-            <div class="stat-card projection-card">
-                <h3>Daily Avg Needed</h3>
-                <div class="number" id="targetDaily">—</div>
-                <div class="subtitle" id="targetSubtitle">to reach 20K</div>
-            </div>
+        <div class="stat-card projection-card">
+            <h3>Daily Avg Needed</h3>
+            <div class="number" id="targetDaily">—</div>
+            <div class="subtitle" id="targetSubtitle">to reach 20K</div>
         </div>
     </div>
 
-    <!-- DAILY PROGRESS CHART -->
+    <!-- DAILY CHART -->
     <h2 class="section-title"><span class="dot"></span> Daily Progress</h2>
     <div class="chart-header">
-        <div class="range-buttons">
-            <button class="range-btn active" data-range="30">30D</button>
-            <button class="range-btn" data-range="90">90D</button>
-            <button class="range-btn" data-range="all">All</button>
-        </div>
+        <button class="range-btn active" data-range="30">30D</button>
+        <button class="range-btn" data-range="90">90D</button>
+        <button class="range-btn" data-range="all">All</button>
     </div>
-    <div class="chart-container">
-        <canvas id="pushUpsChart"></canvas>
-    </div>
+    <div class="chart-box"><canvas id="pushUpsChart"></canvas></div>
 
-    <!-- WEEKLY BREAKDOWN -->
+    <!-- WEEKLY CHART -->
     <h2 class="section-title"><span class="dot"></span> Weekly Breakdown</h2>
-    <div class="chart-container">
-        <canvas id="weeklyChart"></canvas>
-    </div>
+    <div class="chart-box"><canvas id="weeklyChart"></canvas></div>
 
     <!-- AM vs PM -->
     <h2 class="section-title"><span class="dot"></span> AM vs PM Performance</h2>
-    <div class="row">
-        <div class="col-md-4 col-6">
-            <div class="stat-card">
-                <h3>Total AM Push Ups</h3>
-                <div class="number" id="totalAM">—</div>
-                <div class="subtitle" id="amPercentage"></div>
-            </div>
+    <div class="row-3-mixed">
+        <div class="stat-card">
+            <h3>Total AM</h3>
+            <div class="number" id="totalAM">—</div>
+            <div class="subtitle" id="amPercentage"></div>
         </div>
-        <div class="col-md-4 col-6">
-            <div class="stat-card">
-                <h3>Total PM Push Ups</h3>
-                <div class="number" id="totalPM">—</div>
-                <div class="subtitle" id="pmPercentage"></div>
-            </div>
+        <div class="stat-card">
+            <h3>Total PM</h3>
+            <div class="number" id="totalPM">—</div>
+            <div class="subtitle" id="pmPercentage"></div>
         </div>
-        <div class="col-md-4 col-12">
-            <div class="stat-card">
-                <h3>Preferred Time</h3>
-                <div class="number" id="preferredTime">—</div>
-                <div class="subtitle" id="preferredSubtitle"></div>
-            </div>
+        <div class="stat-card span-full">
+            <h3>Preferred Time</h3>
+            <div class="number" id="preferredTime">—</div>
+            <div class="subtitle" id="preferredSubtitle"></div>
         </div>
     </div>
-    <div class="chart-container">
-        <canvas id="amPmChart"></canvas>
-    </div>
+    <div class="chart-box"><canvas id="amPmChart"></canvas></div>
 
     <!-- INSIGHTS -->
     <h2 class="section-title"><span class="dot"></span> Key Insights</h2>
     <div class="insights-grid" id="insightsContainer"></div>
 
     <!-- STATUS -->
-    <div class="alert alert-info" id="loadingStatus">
+    <div class="status info" id="loadingStatus">
         <strong>Loading data…</strong> Pulling your latest push up data from the spreadsheet.
     </div>
 </div>
@@ -500,16 +489,16 @@
 
 <script>
 // ─── CONFIG ───────────────────────────────────────────────
-const GOAL = 20000;
-const DAYS_IN_YEAR = 365; // 2026 is not a leap year
-const CACHE_KEY = 'pushups_cache';
-const CACHE_TTL = 3 * 60 * 60 * 1000; // 3 hours
+const GOAL         = 20000;
+const DAYS_IN_YEAR = 365;
+const CACHE_KEY    = 'pushups_cache';
+const CACHE_TTL    = 3 * 60 * 60 * 1000; // 3 hrs
 
 // ─── STATE ────────────────────────────────────────────────
-let allData = [];
-let dailyChart = null;
-let weeklyChart = null;
-let amPmChart = null;
+let allData      = [];
+let dailyChart   = null;
+let weeklyChart  = null;
+let amPmChart    = null;
 let currentRange = 30;
 
 // ─── CACHE ────────────────────────────────────────────────
@@ -517,44 +506,31 @@ function getCache() {
     try {
         const raw = localStorage.getItem(CACHE_KEY);
         if (!raw) return null;
-        const cached = JSON.parse(raw);
-        if (Date.now() - cached.timestamp > CACHE_TTL) return null;
-        return cached.data;
-    } catch (e) {
-        return null;
-    }
+        const c = JSON.parse(raw);
+        return (Date.now() - c.timestamp > CACHE_TTL) ? null : c.data;
+    } catch (e) { return null; }
 }
 
 function setCache(data) {
-    try {
-        localStorage.setItem(CACHE_KEY, JSON.stringify({ data, timestamp: Date.now() }));
-    } catch (e) { /* ignore */ }
-}
-
-function showCacheBadge() {
-    const badge = document.createElement('span');
-    badge.className = 'cache-badge';
-    badge.textContent = 'cached';
-    document.getElementById('loadingStatus').appendChild(badge);
+    try { localStorage.setItem(CACHE_KEY, JSON.stringify({ data, timestamp: Date.now() })); }
+    catch (e) { /* ignore */ }
 }
 
 // ─── FETCH ────────────────────────────────────────────────
-async function fetchDataFromSheet() {
+async function fetchData() {
     const cached = getCache();
     if (cached) {
         processData(cached);
-        document.getElementById('loadingStatus').innerHTML =
-            '<strong>Data loaded.</strong> Using cached data.';
-        showCacheBadge();
+        setStatus('<strong>Data loaded.</strong> Using cached data. <span class="cache-badge">cached</span>');
         return;
     }
 
-    const sheetID = '14KN-KDPbNyXk-lSJ_yNqx4LhIdgiUp2lwoHEsEmJiPQ';
+    const sheetID   = '14KN-KDPbNyXk-lSJ_yNqx4LhIdgiUp2lwoHEsEmJiPQ';
     const sheetName = 'RawData';
 
     try {
         const res = await fetch(`https://opensheet.elk.sh/${sheetID}/${sheetName}`);
-        if (!res.ok) throw new Error('Failed to fetch data');
+        if (!res.ok) throw new Error('HTTP ' + res.status);
         const data = await res.json();
 
         if (data && data.length > 0) {
@@ -564,127 +540,96 @@ async function fetchDataFromSheet() {
         } else {
             showError('No data found in spreadsheet.');
         }
-    } catch (err) {
+    } catch (e) {
         showError('Unable to load data. Ensure the spreadsheet is publicly shared.');
-        console.error(err);
+        console.error(e);
     }
 }
 
 // ─── DATE HELPERS ─────────────────────────────────────────
-const MONTH_MAP = {
-    'Jan':0,'Feb':1,'Mar':2,'Apr':3,'May':4,'Jun':5,
-    'Jul':6,'Aug':7,'Sep':8,'Oct':9,'Nov':10,'Dec':11
-};
+const MONTHS     = { Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11 };
+const MONTH_NAMES = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
-function parseDate(dateStr) {
-    // Expected: "DD-Mon" e.g. "15-Jan"
-    const parts = dateStr.split('-');
-    if (parts.length < 2) return null;
-    const day = parseInt(parts[0]);
-    const month = MONTH_MAP[parts[1]];
-    if (isNaN(day) || month === undefined) return null;
-    return new Date(2026, month, day);
+function parseDate(str) {
+    const p = (str || '').trim().split('-');
+    if (p.length < 2) return null;
+    const day = parseInt(p[0]), month = MONTHS[p[1]];
+    return (isNaN(day) || month === undefined) ? null : new Date(2026, month, day);
 }
+
+function fmtDate(d) { return MONTH_NAMES[d.getMonth()] + ' ' + d.getDate(); }
 
 // ─── PROCESS ──────────────────────────────────────────────
 function processData(raw) {
-    // Parse & sort by actual date
-    let processed = raw.map(row => {
+    let data = raw.map(row => {
         const dateStr = (row['Date'] || '').trim();
-        const parsed = parseDate(dateStr);
         return {
             dateStr,
-            date: parsed,
-            am: parseInt(row['AM Push-Ups']) || 0,
-            pm: parseInt(row['PM Push-Ups']) || 0,
-            total: parseInt(row['Total']) || 0
+            date:  parseDate(dateStr),
+            am:    parseInt(row['AM Push-Ups']) || 0,
+            pm:    parseInt(row['PM Push-Ups']) || 0,
+            total: parseInt(row['Total'])       || 0
         };
-    }).filter(item => item.date && item.total > 0);
+    }).filter(i => i.date && i.total > 0);
 
-    // Sort chronologically
-    processed.sort((a, b) => a.date - b.date);
-    allData = processed;
+    data.sort((a, b) => a.date - b.date);
+    allData = data;
 
-    if (processed.length === 0) {
-        showError('No valid data found. Check your spreadsheet format.');
-        return;
+    if (!data.length) { showError('No valid data found.'); return; }
+
+    // ── Stats ──
+    const total    = data.reduce((s, i) => s + i.total, 0);
+    const average  = Math.round(total / data.length);
+    const bestVal  = Math.max(...data.map(i => i.total));
+    const bestItem = data.find(i => i.total === bestVal);
+    const totalAM  = data.reduce((s, i) => s + i.am, 0);
+    const totalPM  = data.reduce((s, i) => s + i.pm, 0);
+
+    // ── Streak ──
+    let streak = 1;
+    for (let i = data.length - 2; i >= 0; i--) {
+        if (Math.round((data[i+1].date - data[i].date) / 86400000) === 1) streak++;
+        else break;
     }
 
-    // ── Basic stats ──
-    const total = processed.reduce((s, i) => s + i.total, 0);
-    const average = Math.round(total / processed.length);
-    const bestDayValue = Math.max(...processed.map(i => i.total));
-    const bestDayItem = processed.find(i => i.total === bestDayValue);
+    // ── Projection ──
+    const daysPassed         = data.length;
+    const daysRemaining      = DAYS_IN_YEAR - daysPassed;
+    const projectedTotal     = Math.round((total / daysPassed) * DAYS_IN_YEAR);
+    const pushUpsNeeded      = GOAL - total;
+    const dailyNeededForGoal = daysRemaining > 0 ? Math.ceil(Math.max(pushUpsNeeded, 0) / daysRemaining) : 0;
+    const goalPct            = Math.min(Math.round((total / GOAL) * 100), 100);
 
-    // ── Streak: walk back from end checking consecutive calendar days ──
-    let streak = 0;
-    for (let i = processed.length - 1; i >= 0; i--) {
-        if (i === processed.length - 1) {
-            streak = 1;
-            continue;
-        }
-        const curr = processed[i].date;
-        const next = processed[i + 1].date;
-        const diffDays = Math.round((next - curr) / (1000 * 60 * 60 * 24));
-        if (diffDays === 1) {
-            streak++;
-        } else {
-            break;
-        }
-    }
-
-    // ── AM / PM ──
-    const totalAM = processed.reduce((s, i) => s + i.am, 0);
-    const totalPM = processed.reduce((s, i) => s + i.pm, 0);
-    const amPct = total > 0 ? Math.round((totalAM / total) * 100) : 0;
-    const pmPct = total > 0 ? Math.round((totalPM / total) * 100) : 0;
-
-    // ── Projection & goal ──
-    const daysPassed = processed.length;
-    const daysRemaining = DAYS_IN_YEAR - daysPassed;
-    const projectedTotal = Math.round((total / daysPassed) * DAYS_IN_YEAR);
-    const pushUpsNeeded = GOAL - total;
-    const dailyNeededForGoal = daysRemaining > 0 ? Math.ceil(pushUpsNeeded / daysRemaining) : 0;
-    const goalPct = Math.min(Math.round((total / GOAL) * 100), 100);
-
-    // ── DOM updates ──
-    setText('totalPushUps', total.toLocaleString());
-    setText('totalSubtitle', `${daysPassed} days tracked`);
+    // ── DOM ──
+    setText('totalPushUps',  total.toLocaleString());
+    setText('totalSubtitle', daysPassed + ' days tracked');
     setText('averagePushUps', average.toLocaleString());
-    setText('bestDay', bestDayValue.toLocaleString());
-    setText('bestDayDate', bestDayItem.dateStr);
-    setText('streak', streak);
+    setText('bestDay',        bestVal.toLocaleString());
+    setText('bestDayDate',    bestItem.dateStr);
+    setText('streak',         streak);
     setText('streakSubtitle', streak === 1 ? 'day' : 'days');
 
     setText('projectedTotal', projectedTotal.toLocaleString());
-    setText('daysRemaining', daysRemaining);
-    setText('targetDaily', dailyNeededForGoal.toLocaleString());
-    setText('targetSubtitle', pushUpsNeeded > 0 ? `${pushUpsNeeded.toLocaleString()} remaining` : 'Goal reached!');
+    setText('daysRemaining',  daysRemaining);
+    setText('targetDaily',    dailyNeededForGoal.toLocaleString());
+    setText('targetSubtitle', pushUpsNeeded > 0 ? pushUpsNeeded.toLocaleString() + ' remaining' : 'Goal reached!');
 
-    // Goal progress bar
     document.getElementById('goalProgressBar').style.width = goalPct + '%';
-    document.getElementById('goalPct').textContent = goalPct + '%';
+    setText('goalPct', goalPct + '%');
 
-    // AM / PM
-    setText('totalAM', totalAM.toLocaleString());
-    setText('amPercentage', `${amPct}% of total`);
-    setText('totalPM', totalPM.toLocaleString());
-    setText('pmPercentage', `${pmPct}% of total`);
+    const amPct = total ? Math.round((totalAM / total) * 100) : 0;
+    const pmPct = total ? Math.round((totalPM / total) * 100) : 0;
+    setText('totalAM',          totalAM.toLocaleString());
+    setText('amPercentage',     amPct + '% of total');
+    setText('totalPM',          totalPM.toLocaleString());
+    setText('pmPercentage',     pmPct + '% of total');
+    setText('preferredTime',    totalAM >= totalPM ? 'AM' : 'PM');
+    setText('preferredSubtitle', Math.abs(totalAM - totalPM).toLocaleString() + ' more push-ups');
 
-    const preferred = totalAM >= totalPM ? 'AM' : 'PM';
-    setText('preferredTime', preferred);
-    setText('preferredSubtitle', `${Math.abs(totalAM - totalPM).toLocaleString()} more push-ups`);
-
-    // ── Charts ──
     renderDailyChart();
     renderWeeklyChart();
     renderAMPMChart();
-
-    // ── Insights ──
-    generateInsights(processed, {
-        total, average, bestDayValue, streak, totalAM, totalPM,
-        projectedTotal, daysPassed, daysRemaining, dailyNeededForGoal
-    });
+    generateInsights(data, { total, average, bestVal, streak, totalAM, totalPM, projectedTotal, daysPassed, daysRemaining, dailyNeededForGoal });
 }
 
 function setText(id, val) {
@@ -692,7 +637,13 @@ function setText(id, val) {
     if (el) el.textContent = val;
 }
 
-// ─── DAILY CHART (with range selector) ───────────────────
+// ─── SHARED SCALE OPTIONS ─────────────────────────────────
+const SCALE = {
+    y: { beginAtZero: true, ticks: { color: '#5a5a64', font: { size: 11 } }, grid: { color: '#1e1e24' } },
+    x: { ticks: { color: '#5a5a64', font: { size: 10 }, maxRotation: 45, minRotation: 45 }, grid: { color: '#1e1e24' } }
+};
+
+// ─── DAILY CHART ──────────────────────────────────────────
 function renderDailyChart() {
     const ctx = document.getElementById('pushUpsChart').getContext('2d');
     if (dailyChart) dailyChart.destroy();
@@ -700,11 +651,9 @@ function renderDailyChart() {
     const sliced = currentRange === 'all' ? allData : allData.slice(-currentRange);
     const labels = sliced.map(i => i.dateStr);
     const values = sliced.map(i => i.total);
-
-    // Running average line (7-day)
     const avgLine = sliced.map((_, idx) => {
-        const window = sliced.slice(Math.max(0, idx - 6), idx + 1);
-        return Math.round(window.reduce((s, d) => s + d.total, 0) / window.length);
+        const w = sliced.slice(Math.max(0, idx - 6), idx + 1);
+        return Math.round(w.reduce((s, d) => s + d.total, 0) / w.length);
     });
 
     dailyChart = new Chart(ctx, {
@@ -716,7 +665,7 @@ function renderDailyChart() {
                     label: 'Daily Total',
                     data: values,
                     borderColor: '#4a7fff',
-                    backgroundColor: 'rgba(74, 127, 255, 0.08)',
+                    backgroundColor: 'rgba(74,127,255,0.08)',
                     borderWidth: 2.5,
                     fill: true,
                     tension: 0.35,
@@ -730,7 +679,7 @@ function renderDailyChart() {
                 {
                     label: '7-Day Avg',
                     data: avgLine,
-                    borderColor: 'rgba(255, 193, 7, 0.7)',
+                    borderColor: 'rgba(255,193,7,0.7)',
                     borderWidth: 2,
                     borderDash: [6, 3],
                     fill: false,
@@ -745,29 +694,8 @@ function renderDailyChart() {
             responsive: true,
             maintainAspectRatio: false,
             interaction: { mode: 'index', intersect: false },
-            plugins: {
-                legend: {
-                    display: true,
-                    labels: { color: '#8a8a96', font: { size: 11 }, boxWidth: 14 }
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    ticks: { color: '#5a5a64', font: { size: 11 } },
-                    grid: { color: '#1e1e24' }
-                },
-                x: {
-                    ticks: {
-                        color: '#5a5a64',
-                        font: { size: 10 },
-                        maxRotation: 45,
-                        minRotation: 45,
-                        maxTicksLimit: 12
-                    },
-                    grid: { color: '#1e1e24' }
-                }
-            }
+            plugins: { legend: { labels: { color: '#8a8a96', font: { size: 11 }, boxWidth: 14 } } },
+            scales: { y: SCALE.y, x: { ...SCALE.x, ticks: { ...SCALE.x.ticks, maxTicksLimit: 12 } } }
         }
     });
 }
@@ -777,26 +705,22 @@ function renderWeeklyChart() {
     const ctx = document.getElementById('weeklyChart').getContext('2d');
     if (weeklyChart) weeklyChart.destroy();
 
-    const weeklyMap = {};
+    const map = {};
     allData.forEach(item => {
-        const d = new Date(item.date);
-        // Sunday-start week
-        const sunday = new Date(d);
-        sunday.setDate(d.getDate() - d.getDay());
-        const key = sunday.toISOString().split('T')[0]; // YYYY-MM-DD
-        if (!weeklyMap[key]) weeklyMap[key] = { start: sunday, total: 0 };
-        weeklyMap[key].total += item.total;
+        const d   = new Date(item.date);
+        const sun = new Date(d);
+        sun.setDate(d.getDate() - d.getDay());
+        const key = sun.toISOString().split('T')[0];
+        if (!map[key]) map[key] = { start: sun, total: 0 };
+        map[key].total += item.total;
     });
 
-    const weeks = Object.keys(weeklyMap).sort();
-    const labels = weeks.map(key => {
-        const start = weeklyMap[key].start;
-        const end = new Date(start);
-        end.setDate(start.getDate() + 6);
-        const fmt = d => `${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]} ${d.getDate()}`;
-        return `${fmt(start)}–${fmt(end)}`;
+    const weeks  = Object.keys(map).sort();
+    const labels = weeks.map(k => {
+        const s = map[k].start, e = new Date(s);
+        e.setDate(s.getDate() + 6);
+        return fmtDate(s) + '–' + fmtDate(e);
     });
-    const values = weeks.map(k => weeklyMap[k].total);
 
     weeklyChart = new Chart(ctx, {
         type: 'bar',
@@ -804,39 +728,19 @@ function renderWeeklyChart() {
             labels,
             datasets: [{
                 label: 'Weekly Total',
-                data: values,
-                backgroundColor: 'rgba(74, 127, 255, 0.55)',
+                data: weeks.map(k => map[k].total),
+                backgroundColor: 'rgba(74,127,255,0.55)',
                 borderColor: '#4a7fff',
                 borderWidth: 1.5,
                 borderRadius: 5,
-                hoverBackgroundColor: 'rgba(102, 126, 234, 0.8)'
+                hoverBackgroundColor: 'rgba(102,126,234,0.8)'
             }]
         },
         options: {
             responsive: true,
             maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    display: true,
-                    labels: { color: '#8a8a96', font: { size: 11 }, boxWidth: 14 }
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    ticks: { color: '#5a5a64', font: { size: 11 } },
-                    grid: { color: '#1e1e24' }
-                },
-                x: {
-                    ticks: {
-                        color: '#5a5a64',
-                        font: { size: 10 },
-                        maxRotation: 40,
-                        minRotation: 40
-                    },
-                    grid: { color: '#1e1e24' }
-                }
-            }
+            plugins: { legend: { labels: { color: '#8a8a96', font: { size: 11 }, boxWidth: 14 } } },
+            scales: { y: SCALE.y, x: { ...SCALE.x, ticks: { ...SCALE.x.ticks, maxRotation: 40, minRotation: 40 } } }
         }
     });
 }
@@ -846,121 +750,62 @@ function renderAMPMChart() {
     const ctx = document.getElementById('amPmChart').getContext('2d');
     if (amPmChart) amPmChart.destroy();
 
-    // Show last 30 days for readability
     const sliced = allData.slice(-30);
-    const labels = sliced.map(i => i.dateStr);
 
     amPmChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels,
+            labels: sliced.map(i => i.dateStr),
             datasets: [
-                {
-                    label: 'AM',
-                    data: sliced.map(i => i.am),
-                    backgroundColor: 'rgba(255, 193, 7, 0.6)',
-                    borderColor: '#ffc107',
-                    borderWidth: 1.5
-                },
-                {
-                    label: 'PM',
-                    data: sliced.map(i => i.pm),
-                    backgroundColor: 'rgba(74, 127, 255, 0.6)',
-                    borderColor: '#4a7fff',
-                    borderWidth: 1.5
-                }
+                { label: 'AM', data: sliced.map(i => i.am), backgroundColor: 'rgba(255,193,7,0.6)', borderColor: '#ffc107', borderWidth: 1.5 },
+                { label: 'PM', data: sliced.map(i => i.pm), backgroundColor: 'rgba(74,127,255,0.6)', borderColor: '#4a7fff', borderWidth: 1.5 }
             ]
         },
         options: {
             responsive: true,
             maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    display: true,
-                    labels: { color: '#8a8a96', font: { size: 11 }, boxWidth: 14 }
-                }
-            },
+            plugins: { legend: { labels: { color: '#8a8a96', font: { size: 11 }, boxWidth: 14 } } },
             scales: {
-                y: {
-                    stacked: true,
-                    beginAtZero: true,
-                    ticks: { color: '#5a5a64', font: { size: 11 } },
-                    grid: { color: '#1e1e24' }
-                },
-                x: {
-                    stacked: true,
-                    ticks: {
-                        color: '#5a5a64',
-                        font: { size: 10 },
-                        maxRotation: 45,
-                        minRotation: 45,
-                        maxTicksLimit: 15
-                    },
-                    grid: { color: '#1e1e24' }
-                }
+                y: { ...SCALE.y, stacked: true },
+                x: { ...SCALE.x, stacked: true, ticks: { ...SCALE.x.ticks, maxTicksLimit: 15 } }
             }
         }
     });
 }
 
 // ─── INSIGHTS ─────────────────────────────────────────────
-function generateInsights(data, stats) {
-    const insights = [];
+function generateInsights(data, s) {
+    const out       = [];
+    const goalLabel = (GOAL / 1000) + 'K';
 
-    // Streak
-    if (stats.streak >= 3) {
-        insights.push({
-            title: '🔥 Streak Active',
-            text: `You've done push-ups for ${stats.streak} consecutive days. Consistency is everything — keep the chain going.`
-        });
-    }
+    if (s.streak >= 3)
+        out.push({ title: '🔥 Streak Active', text: `You've done push-ups for ${s.streak} consecutive days. Consistency is everything — keep the chain going.` });
 
-    // Improvement
     if (data.length >= 14) {
-        const recentAvg = Math.round(data.slice(-7).reduce((s, i) => s + i.total, 0) / 7);
-        const earlyAvg = Math.round(data.slice(0, 7).reduce((s, i) => s + i.total, 0) / 7);
-        const diff = recentAvg - earlyAvg;
-        if (diff > 0) {
-            insights.push({
-                title: '📈 Improving',
-                text: `Your last 7-day average (${recentAvg}) is ${diff} higher than your first week (${earlyAvg}). Solid progress.`
-            });
-        } else if (diff < 0) {
-            insights.push({
-                title: '📉 Dip Detected',
-                text: `Recent 7-day average (${recentAvg}) is ${Math.abs(diff)} below your first week. A good time to ramp back up.`
-            });
-        }
+        const recent = Math.round(data.slice(-7).reduce((a,i) => a+i.total, 0) / 7);
+        const early  = Math.round(data.slice(0,7).reduce((a,i) => a+i.total, 0) / 7);
+        const diff   = recent - early;
+        if (diff > 0) out.push({ title: '📈 Improving',    text: `Your last 7-day average (${recent}) is ${diff} higher than your first week (${early}). Solid progress.` });
+        if (diff < 0) out.push({ title: '📉 Dip Detected', text: `Recent 7-day average (${recent}) is ${Math.abs(diff)} below your first week. A good time to ramp back up.` });
     }
 
-    // AM/PM
-    const amPct = Math.round((stats.totalAM / (stats.totalAM + stats.totalPM)) * 100);
-    if (amPct > 60) {
-        insights.push({ title: '🌅 Morning Person', text: `${amPct}% of your push-ups happen in the AM. Strong way to open each day.` });
-    } else if (amPct < 40) {
-        insights.push({ title: '🌙 Evening Grinder', text: `${100 - amPct}% of your push-ups are in the PM. You finish your days strong.` });
+    const amPct = Math.round((s.totalAM / (s.totalAM + s.totalPM)) * 100);
+    if      (amPct > 60) out.push({ title: '🌅 Morning Person',  text: `${amPct}% of your push-ups happen in the AM. Strong way to open each day.` });
+    else if (amPct < 40) out.push({ title: '🌙 Evening Grinder', text: `${100-amPct}% of your push-ups are in the PM. You finish your days strong.` });
+    else                 out.push({ title: '⚖️ Balanced Split',  text: `You split work evenly: ${s.totalAM.toLocaleString()} AM vs ${s.totalPM.toLocaleString()} PM. Nice discipline.` });
+
+    if (s.dailyNeededForGoal > 0) {
+        const ratio = s.dailyNeededForGoal / s.average;
+        if      (ratio <= 1)   out.push({ title: `🎯 ${goalLabel} On Track`,     text: `You need ${s.dailyNeededForGoal}/day to hit ${goalLabel}. Your current average is ${s.average} — you're ahead of pace.` });
+        else if (ratio <= 1.3) out.push({ title: `🎯 ${goalLabel} Within Reach`, text: `You need ${s.dailyNeededForGoal}/day to hit ${goalLabel}. That's only ${Math.round((ratio-1)*100)}% above your current average — very doable.` });
+        else                   out.push({ title: `⚠️ ${goalLabel} Needs a Push`, text: `Hitting ${goalLabel} requires ${s.dailyNeededForGoal}/day — ${Math.round((ratio-1)*100)}% more than your current ${s.average} average. Consider ramping up.` });
     } else {
-        insights.push({ title: '⚖️ Balanced Split', text: `You split work evenly: ${stats.totalAM.toLocaleString()} AM vs ${stats.totalPM.toLocaleString()} PM. Nice discipline.` });
+        out.push({ title: '🏆 Goal Reached', text: `You've already hit ${GOAL.toLocaleString()} push-ups. Incredible work!` });
     }
 
-    // Goal feasibility
-    if (stats.dailyNeededForGoal > 0) {
-        const ratio = stats.dailyNeededForGoal / stats.average;
-        const goalLabel = (GOAL / 1000) + 'K';
-        if (ratio <= 1) {
-            insights.push({ title: `🎯 ${goalLabel} On Track`, text: `You need ${stats.dailyNeededForGoal}/day to hit ${goalLabel}. Your current average is ${stats.average} — you're ahead of pace.` });
-        } else if (ratio <= 1.3) {
-            insights.push({ title: `🎯 ${goalLabel} Within Reach`, text: `You need ${stats.dailyNeededForGoal}/day to hit ${goalLabel}. That's only ${Math.round((ratio - 1) * 100)}% above your current average — very doable.` });
-        } else {
-            insights.push({ title: `⚠️ ${goalLabel} Needs a Push`, text: `Hitting ${goalLabel} requires ${stats.dailyNeededForGoal}/day — ${Math.round((ratio - 1) * 100)}% more than your current ${stats.average} average. Consider ramping up.` });
-        }
-    } else {
-        insights.push({ title: '🏆 Goal Reached', text: `You've already hit ${GOAL.toLocaleString()} push-ups. Incredible work — you're ahead of schedule.` });
-    }
-
-    document.getElementById('insightsContainer').innerHTML = insights.map(i =>
-        `<div class="insight-box"><h4>${i.title}</h4><p>${i.text}</p></div>`
-    ).join('');
+    document.getElementById('insightsContainer').innerHTML = out
+        .map(i => `<div class="insight-box"><h4>${i.title}</h4><p>${i.text}</p></div>`)
+        .join('');
 }
 
 // ─── RANGE SELECTOR ───────────────────────────────────────
@@ -969,20 +814,25 @@ document.querySelectorAll('.range-btn').forEach(btn => {
         document.querySelectorAll('.range-btn').forEach(b => b.classList.remove('active'));
         this.classList.add('active');
         currentRange = this.dataset.range === 'all' ? 'all' : parseInt(this.dataset.range);
-        if (allData.length > 0) renderDailyChart();
+        if (allData.length) renderDailyChart();
     });
 });
 
-// ─── ERROR ────────────────────────────────────────────────
+// ─── STATUS HELPERS ───────────────────────────────────────
+function setStatus(html) {
+    const el = document.getElementById('loadingStatus');
+    el.innerHTML = html;
+    el.className = 'status info';
+}
+
 function showError(msg) {
     const el = document.getElementById('loadingStatus');
     el.innerHTML = `<strong>Error:</strong> ${msg}`;
-    el.classList.remove('alert-info');
-    el.classList.add('alert-danger');
+    el.className = 'status error';
 }
 
 // ─── INIT ─────────────────────────────────────────────────
-window.addEventListener('load', fetchDataFromSheet);
+window.addEventListener('load', fetchData);
 </script>
 
 </body>
